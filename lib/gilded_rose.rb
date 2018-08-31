@@ -8,7 +8,9 @@ class GildedRose
   end
 
   def tick
-    if @name != 'Aged Brie' && @name != 'Backstage passes to a TAFKAL80ETC concert'
+    if @name == 'Conjured Mana Cake'
+      @quality = @quality - 2
+    elsif @name != 'Aged Brie' && @name != 'Backstage passes to a TAFKAL80ETC concert'
       if @quality > 0
         if @name != 'Sulfuras, Hand of Ragnaros'
           @quality = @quality - 1
@@ -17,6 +19,7 @@ class GildedRose
     else
       if @quality < 50
         @quality = @quality + 1
+
         if @name == 'Backstage passes to a TAFKAL80ETC concert'
           if @days_remaining < 11
             if @quality < 50
@@ -31,11 +34,17 @@ class GildedRose
         end
       end
     end
+
     if @name != 'Sulfuras, Hand of Ragnaros'
       @days_remaining = @days_remaining - 1
     end
+
     if @days_remaining < 0
-      if @name != 'Aged Brie'
+      if @name == 'Conjured Mana Cake'
+        if @quality > 0
+          @quality = @quality - 2
+        end
+      elsif @name != 'Aged Brie'
         if @name != 'Backstage passes to a TAFKAL80ETC concert'
           if @quality > 0
             if @name != 'Sulfuras, Hand of Ragnaros'
@@ -51,5 +60,7 @@ class GildedRose
         end
       end
     end
+
+    @quality = 0 if @quality < 0
   end
 end
